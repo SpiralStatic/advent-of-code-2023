@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using TrebuchetCalculation;
+
+var calibrationValues = await TrebuchetCalibration.ReadCalibrationDocument("./input.txt");
+
+var overallCalibrationValue = TrebuchetCalibration.CalculateCalibrationValue(calibrationValues);
+
+Console.WriteLine(overallCalibrationValue);
