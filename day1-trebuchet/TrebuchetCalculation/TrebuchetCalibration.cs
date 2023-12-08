@@ -25,26 +25,27 @@ public partial class TrebuchetCalibration
 
     public static int CalculateCalibrationValue(IEnumerable<string> calibrationValues)
     {
-        return calibrationValues.Take(800).Select(
+        return calibrationValues.Select(
             x =>
             {
-                var matches = LetterDigitMatcher().Matches(x);
+                var matches = new List<Match>();
+                Match match = LetterDigitMatcher().Match(x);
+                while (match.Success)
+                {
+                    matches.Add(match);
+                    match = LetterDigitMatcher().Match(x, match.Index + 1); 
+                }
+
                 var firstDigit = ParseMatch(matches.First());
                 var lastDigit = ParseMatch(matches.Last());
-                Debug.WriteLine("String: " + x);
-                foreach(var match in matches) {              
-                    Debug.WriteLine(match);
-                }
-                Debug.WriteLine("Answer: " + firstDigit.ToString ()+ lastDigit.ToString());
-                Debug.WriteLine("-----------------");
-               
+
                 return int.Parse(firstDigit.ToString() + lastDigit.ToString());
             }
         )
         .Sum();
     }
 
-    [GeneratedRegex("(\\d|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine))")]
+    [GeneratedRegex("\\d|(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)")]
     private static partial Regex LetterDigitMatcher();
 
     private static int ParseMatch(Match match)

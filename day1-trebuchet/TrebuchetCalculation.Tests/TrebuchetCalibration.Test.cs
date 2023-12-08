@@ -46,7 +46,7 @@ public class TrebuchetCalibrationTest
         Assert.That(result, Is.EqualTo(expected));
     }
 
-        [Test]
+    [Test]
     public void CalculateCalibrationValue_GivenCalibrationValuesWithMergedCase_ReturnsOverallCalibrationValue()
     {
         var expected = 52;
