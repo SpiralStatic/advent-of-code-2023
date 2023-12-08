@@ -45,4 +45,19 @@ public class TrebuchetCalibrationTest
 
         Assert.That(result, Is.EqualTo(expected));
     }
+
+        [Test]
+    public void CalculateCalibrationValue_GivenCalibrationValuesWithMergedCase_ReturnsOverallCalibrationValue()
+    {
+        var expected = 52;
+
+        List<string> calibrationValues = new()
+        {
+            "5mfknkone4cphtbrtj1eightwon"
+        };
+
+        var result = TrebuchetCalibration.CalculateCalibrationValue(calibrationValues);
+
+        Assert.That(result, Is.EqualTo(expected));
+    }
 }
