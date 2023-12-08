@@ -8,7 +8,7 @@ public class TrebuchetCalibrationTest
     }
 
     [Test]
-    public void TrebuchetCalculation_GivenCalibrationValues_ReturnsOverallCalibrationValue()
+    public void CalculateCalibrationValue_GivenCalibrationValues_ReturnsOverallCalibrationValue()
     {
         var expected = 142;
 
@@ -18,6 +18,27 @@ public class TrebuchetCalibrationTest
             "pqr3stu8vwx",
             "a1b2c3d4e5f",
             "treb7uchet",
+        };
+
+        var result = TrebuchetCalibration.CalculateCalibrationValue(calibrationValues);
+
+        Assert.That(result, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void CalculateCalibrationValue_GivenCalibrationValuesWithStringNumbers_ReturnsOverallCalibrationValue()
+    {
+        var expected = 281;
+
+        List<string> calibrationValues = new()
+        {
+            "two1nine",
+            "eightwothree",
+            "abcone2threexyz",
+            "xtwone3four",
+            "4nineeightseven2",
+            "zoneight234",
+            "7pqrstsixteen"
         };
 
         var result = TrebuchetCalibration.CalculateCalibrationValue(calibrationValues);
