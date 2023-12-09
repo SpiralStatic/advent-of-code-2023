@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeConundrum", "CubeConundrum\CubeConundrum.csproj", "{93DCD751-9B82-4C43-8AB3-15978FD32AAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeConundrum.Tests", "CubeConundrum.Tests\CubeConundrum.Tests.csproj", "{11E96CDD-623D-4ECA-8AB2-8B692F2D6473}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93DCD751-9B82-4C43-8AB3-15978FD32AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93DCD751-9B82-4C43-8AB3-15978FD32AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93DCD751-9B82-4C43-8AB3-15978FD32AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93DCD751-9B82-4C43-8AB3-15978FD32AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E96CDD-623D-4ECA-8AB2-8B692F2D6473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E96CDD-623D-4ECA-8AB2-8B692F2D6473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E96CDD-623D-4ECA-8AB2-8B692F2D6473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E96CDD-623D-4ECA-8AB2-8B692F2D6473}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
