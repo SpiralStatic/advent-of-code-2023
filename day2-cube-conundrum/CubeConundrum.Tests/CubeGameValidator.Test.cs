@@ -1,6 +1,6 @@
 namespace CubeConundrum.Tests;
 
-public class Tests
+public class CubeGameValidatorTest;
 {
     private readonly Bag DefaultLoadedBag = new(14, 13, 12);
 
