@@ -14,6 +14,12 @@ public static class CubeGameValidator
             .Sum(x => x.Id);
     }
 
+    public static int MinimumCubesPower(IEnumerable<string> records)
+    {
+        return ParseGameRecords(records)
+            .Sum(x => CalculatePower(x.Bags));
+    }
+
     private static IEnumerable<GameRecord> ParseGameRecords(IEnumerable<string> records)
     {
         // "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
@@ -47,5 +53,16 @@ public static class CubeGameValidator
             bag.Blue <= loadedBag.Blue &&
             bag.Green <= loadedBag.Green &&
             bag.Red <= loadedBag.Red;
+    }
+
+    private static int CalculatePower(IEnumerable<Bag> bags)
+    {
+        var maxBlue = bags.Max(x => x.Blue);
+        var maxGreen = bags.Max(x => x.Green);
+        var maxRed = bags.Max(x => x.Red);
+
+        var power = maxBlue * maxGreen * maxRed;
+
+        return power;
     }
 }
