@@ -1,3 +1,3 @@
 namespace CubeConundrum;
 
-public record GameRecord(int Id, IEnumerable<Bag> Sets);
+public record GameRecord(int Id, IEnumerable<Bag> Bags);

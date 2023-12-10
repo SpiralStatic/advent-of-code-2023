@@ -10,17 +10,16 @@ public static class CubeGameValidator
     public static int GameValidator(IEnumerable<string> records, Bag loadedBag)
     {
         return ParseGameRecords(records)
-            .Where(x => x.Sets.All(bag => ValidateGameRecord(bag, loadedBag)))
+            .Where(x => x.Bags.All(bag => ValidateGameRecord(bag, loadedBag)))
             .Sum(x => x.Id);
     }
 
     private static IEnumerable<GameRecord> ParseGameRecords(IEnumerable<string> records)
     {
         // "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-        return records.Select(x =>
+        return records.Select((x, index) =>
         {
             var splitOnColon = x.Split(": "); // [Game 1], [3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green]
-            var id = (int)char.GetNumericValue(splitOnColon.First().Last());
             var splitOnSemicolon = splitOnColon.Last().Split("; "); // [3 blue, 4 red], [1 red, 2 green, 6 blue], [2 green]
             var bags = splitOnSemicolon.Select(x =>
             {
@@ -38,7 +37,7 @@ public static class CubeGameValidator
                 return new Bag(blue, green, red);
             });
 
-            return new GameRecord(id, bags);
+            return new GameRecord(index + 1, bags);
         });
     }
 
