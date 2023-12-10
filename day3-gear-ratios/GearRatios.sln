@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearRatios", "GearRatios\GearRatios.csproj", "{270632BE-1204-42DD-8E69-2177B7D719A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearRatios.Tests", "GearRatios.Tests\GearRatios.Tests.csproj", "{596CC0DB-B2DE-41EA-9BA7-1AD2F326DD83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{270632BE-1204-42DD-8E69-2177B7D719A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{270632BE-1204-42DD-8E69-2177B7D719A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{270632BE-1204-42DD-8E69-2177B7D719A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{270632BE-1204-42DD-8E69-2177B7D719A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596CC0DB-B2DE-41EA-9BA7-1AD2F326DD83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596CC0DB-B2DE-41EA-9BA7-1AD2F326DD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596CC0DB-B2DE-41EA-9BA7-1AD2F326DD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596CC0DB-B2DE-41EA-9BA7-1AD2F326DD83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
