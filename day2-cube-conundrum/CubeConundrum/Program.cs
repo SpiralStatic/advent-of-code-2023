@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using CubeConundrum;
+
+var gameRecords = await CubeGameValidator.ReadGameRecords("./input.txt");
+var loadedBag = new Bag(14, 13, 12);
+
+var validGameIdsSum = CubeGameValidator.GameValidator(gameRecords, loadedBag);
+
+Console.WriteLine(validGameIdsSum);
