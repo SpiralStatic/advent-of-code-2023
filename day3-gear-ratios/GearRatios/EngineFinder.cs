@@ -3,6 +3,8 @@ namespace GearRatios;
 
 public static class EngineFinder
 {
+    private const char GearSymbol = '*';
+
     public static async Task<IEnumerable<string>> ReadSchematic(string path)
     {
         return await File.ReadAllLinesAsync(path);
@@ -34,7 +36,7 @@ public static class EngineFinder
             var validPositions = positionsToCheck.Where(x =>
             {
                 var character = schematicAsArray[x];
-                return x >= 0 && char.IsDigit(character);
+                return x >= 0 && x <= schematicAsArray.Length && char.IsDigit(character);
             });
 
             var numbers = validPositions.Select(x =>
@@ -96,8 +98,61 @@ public static class EngineFinder
         }
     }
 
-    public static int CalculateGearRatioSum(List<string> schematic)
+    public static int CalculateGearRatioSum(IEnumerable<string> schematic)
     {
-        return 0;
+        var schematicSize = schematic.First().Length;
+        var schematicAsArray = schematic.SelectMany(x => x.ToCharArray()).ToArray();
+
+        var gearSymbols = schematicAsArray
+            .Select((character, index) => (character, index))
+            .Where((x) => x.character == GearSymbol);
+
+        var gearRatioSum = gearSymbols.Aggregate(0, (agg, symbol) =>
+        {
+            var positionsToCheck = new List<int> {
+                symbol.index - schematicSize + 1, // Top Left
+                symbol.index - schematicSize, // Top
+                symbol.index - schematicSize - 1, // Top Right
+                symbol.index - 1, // Left
+                symbol.index + 1, // Right
+                symbol.index + schematicSize - 1, // Bottom Left
+                symbol.index + schematicSize, // Bottom
+                symbol.index + schematicSize + 1, // Bottom Right
+            };
+
+            var validPositions = positionsToCheck.Where(x =>
+            {
+                var character = schematicAsArray[x];
+                return x >= 0 && x <= schematicAsArray.Length && char.IsDigit(character);
+            });
+
+            var numbers = validPositions.Select(x =>
+            {
+                var numberBuilder = new List<(int IndexSum, char Digit)> { (x, schematicAsArray[x]) };
+
+                ReadAdjacentCharacters(x, false, schematicAsArray, numberBuilder); // Read Left
+
+                ReadAdjacentCharacters(x, true, schematicAsArray, numberBuilder); // Read Right
+
+                var indexSum = numberBuilder.Sum(x => x.IndexSum);
+                var number = int.Parse(numberBuilder.Select(x => x.Digit).ToArray());
+
+                return (IndexSum: indexSum, Number: number);
+            });
+
+            var partNumbers = numbers
+                .DistinctBy(x => x.IndexSum)
+                .Select(x => x.Number);
+
+            if (partNumbers.Count() >= 2)
+            {
+                return agg + partNumbers.Aggregate(1, (agg, x) => agg * x);
+            }
+            else {
+                return agg;
+            }
+        });
+
+        return gearRatioSum;
     }
 }
