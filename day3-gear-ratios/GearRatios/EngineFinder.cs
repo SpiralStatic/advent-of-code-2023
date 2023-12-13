@@ -1,3 +1,4 @@
+
 namespace GearRatios;
 
 public static class EngineFinder
@@ -93,5 +94,10 @@ public static class EngineFinder
                 break;
             }
         }
+    }
+
+    public static int CalculateGearRatioSum(List<string> schematic)
+    {
+        return 0;
     }
 }
