@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using GearRatios;
+
+var schematic = await EngineFinder.ReadSchematic("./input.txt");
+
+var partNumbersSum = EngineFinder.FindPartNumberSum(schematic);
+Console.WriteLine(partNumbersSum);

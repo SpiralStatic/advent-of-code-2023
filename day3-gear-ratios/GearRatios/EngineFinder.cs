@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace GearRatios;
 
 public static class EngineFinder
@@ -9,30 +7,17 @@ public static class EngineFinder
         return await File.ReadAllLinesAsync(path);
     }
 
-    public static int ReadSchematic(IEnumerable<string> schematic)
+    public static int FindPartNumberSum(IEnumerable<string> schematic)
     {
-        /*  
-            467..114..
-            ...*......
-            ..35..633.
-            ......#...
-            617*......
-            .....+.58.
-            ..592.....
-            ......755.
-            ...$.*....
-            .664.598..
-        */
-
         var schematicSize = schematic.First().Length;
         var schematicAsArray = schematic.SelectMany(x => x.ToCharArray()).ToArray();
 
-        var allowedSymbols = new List<char> { '*', '#', '+', '-', '=', '/', '%', '$', '@' };
+        var allowedSymbols = new List<char> { '*', '#', '+', '-', '=', '/', '%', '$', '@', '&' };
         var symbols = schematicAsArray
             .Select((character, index) => (character, index))
             .Where((x) => allowedSymbols.Contains(x.character));
 
-        var partNumbers = symbols.Aggregate(new List<int>(), (agg, symbol) =>
+        var partNumbers = symbols.Aggregate(0, (agg, symbol) =>
         {
             var positionsToCheck = new List<int> {
                 symbol.index - schematicSize + 1, // Top Left
@@ -48,72 +33,65 @@ public static class EngineFinder
             var validPositions = positionsToCheck.Where(x =>
             {
                 var character = schematicAsArray[x];
-                return x >= 0 && char.IsDigit(character) && char.GetNumericValue(character) != 0;
-            }).ToList();
+                return x >= 0 && char.IsDigit(character);
+            });
 
             var numbers = validPositions.Select(x =>
             {
-                var numberBuilder = new StringBuilder(schematicAsArray[x].ToString());
+                var numberBuilder = new List<(int IndexSum, char Digit)> { (x, schematicAsArray[x]) };
 
-                var carryOnLeft = true;
-                var left = x - 1;
-                while (carryOnLeft)
-                {
-                    if (left >= 0)
-                    {
-                        var leftCharacter = schematicAsArray[left];
-                        if (char.IsDigit(leftCharacter) && char.GetNumericValue(leftCharacter) != 0)
-                        {
-                            numberBuilder.Insert(0, leftCharacter);
-                            left--;
-                        }
-                        else
-                        {
-                            carryOnLeft = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        carryOnLeft = false;
-                        break;
-                    }
-                }
+                ReadAdjacentCharacters(x, false, schematicAsArray, numberBuilder); // Read Left
 
-                var carryOnRight = true;
-                var right = x + 1;
-                while (carryOnRight)
-                {
-                    if (right <= schematicAsArray.Length)
-                    {
-                        var rightCharacter = schematicAsArray[right];
-                        if (char.IsDigit(rightCharacter) && char.GetNumericValue(rightCharacter) != 0)
-                        {
-                            numberBuilder.Append(rightCharacter);
-                            right++;
-                        }
-                        else
-                        {
-                            carryOnRight = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        carryOnRight = false;
-                        break;
-                    }
-                }
+                ReadAdjacentCharacters(x, true, schematicAsArray, numberBuilder); // Read Right
 
-                var numberAsString = numberBuilder.ToString();
-                return int.Parse(numberAsString);
-            }); ;
+                var indexSum = numberBuilder.Sum(x => x.IndexSum);
+                var number = int.Parse(numberBuilder.Select(x => x.Digit).ToArray());
 
-            agg.AddRange(numbers);
+                return (IndexSum: indexSum, Number: number);
+            });
 
-            return agg;
+            var dedupedNumbers = numbers
+                .DistinctBy(x => x.IndexSum)
+                .Select(x => x.Number)
+                .Sum();
+
+            return agg + dedupedNumbers;
         });
 
-        return partNumbers.Distinct().Sum();
+        return partNumbers;
+    }
+
+    private static void ReadAdjacentCharacters(int startingIndex, bool direction, char[] schematicAsArray, List<(int, char)> numberBuilder)
+    {
+        var continueOn = true;
+        var nextIndex = startingIndex + (direction ? 1 : -1);
+        while (continueOn)
+        {
+            if (nextIndex >= 0 && nextIndex <= schematicAsArray.Length)
+            {
+                var nextCharacter = schematicAsArray[nextIndex];
+                if (char.IsDigit(nextCharacter))
+                {
+                    if (direction)
+                    {
+                        numberBuilder.Add((nextIndex, nextCharacter));
+                        nextIndex++;
+                    }
+                    else
+                    {
+                        numberBuilder.Insert(0, (nextIndex, nextCharacter));
+                        nextIndex--;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }

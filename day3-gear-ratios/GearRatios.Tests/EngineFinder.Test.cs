@@ -8,7 +8,7 @@ public class EngineFinderTest
     }
 
     [Test]
-    public void EngineFinder_GivenSchematic_ReturnsCorrectPartSum()
+    public void FindPartNumberSum_GivenSchematic_ReturnsCorrectPartSum()
     {
         var schematic = new List<string>
         {
@@ -24,7 +24,7 @@ public class EngineFinderTest
             ".664.598.."
         };
 
-        var result = EngineFinder.ReadSchematic(schematic);
+        var result = EngineFinder.FindPartNumberSum(schematic);
 
         var expectedPartSum = 4361;
 
