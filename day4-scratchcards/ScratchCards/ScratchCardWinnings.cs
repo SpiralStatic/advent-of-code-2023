@@ -34,4 +34,15 @@ public static class ScratchCardsWinnings
         )
         .Sum();
     }
+
+    public static int CalculateTotalScratchcards(IEnumerable<string> scratchCardLines)
+    {
+        /*
+        [1],
+        [2,3,4],[2,3,4],
+        [3,4],[3,4],[5,6,7],[4,5,6],[5,6],[5,6]
+        */
+
+        return 0;
+    }
 }
