@@ -2,6 +2,10 @@
 
 var scratchCardLines = await ScratchCardsWinnings.ReadScratchCard("./input.txt");
 
-var result = ScratchCardsWinnings.CalculateWinnings(scratchCardLines);
+var part1 = ScratchCardsWinnings.CalculateWinnings(scratchCardLines);
 
-Console.WriteLine(result);
+Console.WriteLine(part1);
+
+var part2 = ScratchCardsWinnings.CalculateTotalScratchcards(scratchCardLines);
+
+Console.WriteLine(part2);

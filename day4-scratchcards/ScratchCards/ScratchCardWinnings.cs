@@ -15,7 +15,7 @@ public static class ScratchCardsWinnings
         "Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83",
         "Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36",
         "Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"
-        */
+    */
 
     public static int CalculateWinnings(IEnumerable<string> scratchCardLines)
     {
@@ -37,12 +37,34 @@ public static class ScratchCardsWinnings
 
     public static int CalculateTotalScratchcards(IEnumerable<string> scratchCardLines)
     {
-        /*
-        [1],
-        [2,3,4],[2,3,4],
-        [3,4],[3,4],[5,6,7],[4,5,6],[5,6],[5,6]
-        */
+        var all = scratchCardLines.Select(TotalWinningNumbers).ToList();
 
-        return 0;
+        // winning numbers ->  count cards -> sum
+        var array = new int[all.Count];
+        for (int i = 0; i < all.Count; i++)
+        {
+            array[i]++;
+            for (int k = 0; k < array[i]; k++)
+            {
+                var total = all[i];
+                for (int j = 1; j <= total; j++)
+                {
+                    array[i + j]++;
+                }
+            }
+
+        }
+
+        return array.Sum();
+    }
+
+    private static int TotalWinningNumbers(string scratchCardLine)
+    {
+        var allNumbers = scratchCardLine.Split(": ")[1];
+        var numbers = allNumbers.Split(" | ");
+        var winningNumbers = numbers[0].Split(" ").Where(x => !string.IsNullOrEmpty(x));
+        var playedNumbers = numbers[1].Split(" ").Where(x => !string.IsNullOrEmpty(x));
+
+        return winningNumbers.Intersect(playedNumbers).Count();
     }
 }
