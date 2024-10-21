@@ -21,12 +21,7 @@ public static class ScratchCardsWinnings
     {
         return scratchCardLines.Select(x =>
             {
-                var allNumbers = x.Split(": ")[1];
-                var numbers = allNumbers.Split(" | ");
-                var winningNumbers = numbers[0].Split(" ").Where(x => !string.IsNullOrEmpty(x));
-                var playedNumbers = numbers[1].Split(" ").Where(x => !string.IsNullOrEmpty(x));
-
-                var playedWinningNumbersCount = winningNumbers.Intersect(playedNumbers).Count();
+                var playedWinningNumbersCount = TotalWinningNumbers(x);
 
                 var result = (int)Math.Pow(2, playedWinningNumbersCount - 1);
                 return playedWinningNumbersCount > 0 ? result : 0;
@@ -38,7 +33,7 @@ public static class ScratchCardsWinnings
     public static int CalculateTotalScratchcards(IEnumerable<string> scratchCardLines)
     {
         var all = scratchCardLines.Select(TotalWinningNumbers).ToList();
-
+            
         // winning numbers ->  count cards -> sum
         var array = new int[all.Count];
         for (int i = 0; i < all.Count; i++)
